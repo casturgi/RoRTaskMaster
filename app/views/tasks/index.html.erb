@@ -1,0 +1,17 @@
+<% if user_signed_in? %>
+	<div class="col-md-8 col-md-offset-2">		
+		<h1>My projects</h1>
+
+		<% @tasks.each do |task| %>
+			<% if task.user_id == current_user.id %>
+				<h2><%= link_to task.name, task %></h2>
+				<p><%= task.description %></p>
+			<% else %>
+				<h2>You're not working on anything. Start a new project!</h2>
+			<% end %>
+		<% end %>
+
+	</div>
+<% else %>
+	<%= render 'welcome' %>
+<% end %>

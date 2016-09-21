@@ -1,23 +1,20 @@
 class ItemsController < ApplicationController
-	before_action :find_item, only: [:show, :edit, :update, :destroy]
-
-	def index
-		if user_signed_in?
-			@items = Item.where(:user_id => current_user.id).order("created_at ASC")
-		end
-	end
-
-	def show
-	end
+	before_action :authenticate_user!
+	before_action :find_item, only: [:edit, :update, :destroy]
+	before_action :find_task, only: [:new, :create, :edit, :update, :destroy]
 
 	def new
-		@item = current_user.items.build
+		@item = @task.items.new
 	end
 
+
 	def create
-		@item = current_user.items.build(item_params)
+
+		@item = @task.items.create(item_params)
+		@item.user_id = current_user.id
+
 		if @item.save
-			redirect_to root_path
+			redirect_to task_path(@task)
 		else
 			render 'new'
 		end
@@ -28,7 +25,7 @@ class ItemsController < ApplicationController
 
 	def update
 		if @item.update(item_params)
-			redirect_to	item_path(@item)
+			redirect_to	task_path(@task)
 		else
 			render 'edit'
 		end
@@ -36,7 +33,7 @@ class ItemsController < ApplicationController
 
 	def destroy
 		@item.destroy
-		redirect_to root_path
+		redirect_to task_path(@task)
 	end
 
 	def complete
@@ -48,10 +45,14 @@ class ItemsController < ApplicationController
 	private 
 
 	def item_params
-		params.require(:item).permit(:title, :description)
+		params.require(:item).permit(:title, :description, :task_id)
 	end
 
 	def find_item
 		@item = Item.find(params[:id])
+	end
+
+	def find_task
+		@task = Task.find(params[:task_id])
 	end
 end
