@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160920195805) do
+ActiveRecord::Schema.define(version: 20161005005004) do
 
   create_table "items", force: :cascade do |t|
     t.string   "title"
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 20160920195805) do
     t.datetime "completed_at"
     t.integer  "task_id"
     t.text     "resources"
+    t.boolean  "in_progress"
   end
 
   create_table "tasks", force: :cascade do |t|

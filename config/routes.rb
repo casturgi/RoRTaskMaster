@@ -5,6 +5,8 @@ Rails.application.routes.draw do
 		resources :items do
 			member do 
 				patch :complete
+				patch :in_progress
+				patch :not_started
 			end
 		end
 	end

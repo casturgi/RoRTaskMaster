@@ -1,9 +1,97 @@
-<div>
-	<h1><%= item.title %></h1>
-	<p><%= item.description %></p>
-</div>
+<div class="body">
+	<% if item.completed? %>
+<!-- For completed items -->
+		<div class="row item">
+			<div class="progress">
+				<span class="started-inactive">Not Started</span>
+				<span class="progress-inactive">In Progress</span>
+				<span class="completed-active">Completed</span>
+			</div>
 
-<div>
-	<%= link_to "Edit", edit_task_item_path(item.task, item) %>
-	<%= link_to "Delete", task_item_path(item.task, item), method: :delete, data: { confirm: "Are you sure?"} %>
+			<div class="row">
+				<p><%= link_to task_item_path(item.task, item), method: :delete, data: { confirm: "Are you sure?" } do %></p>
+						<i class="fa fa-trash fa-lg right fa-fw"></i>
+				<% end %>
+			</div>	
+			
+			<div class="progress-btns">
+				<!-- inactive left arrow btn -->
+				<i class="fa fa-arrow-circle-o-left fa-3x icon-cog" aria-hidden="true"></i>
+				<!-- inactive right arrow btn -->
+				<i class="fa fa-arrow-circle-o-right fa-3x icon-cog" aria-hidden="true"></i>
+
+			</div>
+
+			<div class="content">
+				<h2 style="opacity: 0.5;" class="item-title"><strike><%= item.title %></strike></h2>
+				<p style="opacity: 0.5;" class="item-sub-title item-desc"><%= item.description %></p>
+				<p style="opacity: 0.5;" class="time-created-at item-sub-title">Completed <%= time_ago_in_words(item.completed_at) %> ago</p>
+			</div>
+
+		</div>
+
+	<% else %>
+<!-- For items not started yet -->
+		<% if item.in_progress == false %>
+			<div class="row item">
+				<div class="progress">
+					<span class="started-active">Not Started</span>
+					<span class="progress-inactive">In Progress</span>
+					<span class="completed-inactive">Completed</span>
+				</div>
+					
+				<div class="row">
+					<p><%= link_to task_item_path(item.task, item), method: :delete, data: { confirm: "Are you sure?" } do %></p>
+							<i class="fa fa-trash fa-lg right fa-fw"></i>
+					<% end %>
+				</div>	
+
+				<div class="progress-btns">
+					<!-- Inactive backwards arrow btn -->
+					<i class="fa fa-arrow-circle-o-left fa-3x icon-cog" aria-hidden="true"></i>
+					<%= link_to in_progress_task_item_path(item), method: :patch  do %>
+						<i class="fa fa-arrow-circle-o-right fa-3x" aria-hidden="true"></i>
+					<% end %>
+				</div>
+
+				<div class="content">
+					<h2 class="item-title"><%= item.title %></h2>
+					<p class="item-sub-title item-desc"><%= item.description %></p>
+					<p style="opacity: 0.5;" class="time-created-at item-sub-title">Created <%= time_ago_in_words(item.created_at) %> ago</p>
+				</div>			
+
+			</div>
+		<% else %>
+<!-- For items in progress -->
+			<div class="row item">
+				<div class="progress">
+					<span class="started-inactive">Not Started</span>
+					<span class="progress-active">In Progress</span>
+					<span class="completed-inactive">Completed</span>
+					
+				</div>
+				
+					<div class="row">
+					<p><%= link_to task_item_path(item.task, item), method: :delete, data: { confirm: "Are you sure?" } do %></p>
+							<i class="fa fa-trash fa-lg right fa-fw"></i>
+					<% end %>
+				</div>	
+
+				<div class="progress-btns">
+					<%= link_to not_started_task_item_path(item), method: :patch do %>
+						<i class="fa fa-arrow-circle-o-left fa-3x" aria-hidden="true"></i>
+					<% end %>
+					<%= link_to complete_task_item_path(item), method: :patch do %>
+						<i class="fa fa-arrow-circle-o-right fa-3x" aria-hidden="true"></i>
+					<% end %>
+				</div>
+
+				<div class="content">
+					<h2 class="item-title"><%= item.title %></h2>
+					<p class="item-sub-title item-desc"><%= item.description %></p>
+					<p style="opacity: 0.5;" class="time-created-at item-sub-title">Created <%= time_ago_in_words(item.created_at) %> ago</p>
+				</div>
+			</div>
+		<% end %>	
+	<% end %>
 </div>

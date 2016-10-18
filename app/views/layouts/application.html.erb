@@ -14,7 +14,7 @@
 	<nav class="navbar navbar-default">
 		<div class="container">
 			<div class="navbar-header">
-				<%= link_to "TaskMaster", root_path, class:"navbar-brand" %>
+				<%= link_to "Trail Blazer PM", root_path, class:"navbar-brand" %>
 			</div>
 			<ul class="nav navbar-nav navbar-right">
 				<% if current_user.present? %>
@@ -25,14 +25,14 @@
 				<% end %>
 			</ul>
 			<% if user_signed_in? %>
-				<%= link_to "Create Item", new_task_path, class: "navbar-text navbar_link" %>
+				<%= link_to "Create New Project", new_task_path, class: "navbar-text navbar_link" %>
 			<% end %>
 		</div>
 	</nav>
 
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
-    
+    <!-- <p class="notice"><%= notice %></p> -->
+<!--     <p class="alert"><%= alert %></p>
+ -->    
     <div class="container">
     	<%= yield %>
     </div>

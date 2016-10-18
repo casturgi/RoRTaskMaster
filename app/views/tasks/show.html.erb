@@ -1,11 +1,14 @@
-<div>
-	<h1><%= @task.name %></h1>
-	<p><%= @task.description %></p>
-	<p><%= link_to "Delete", task_path(@task), method: :delete, data: { confirm: "Are you sure you want to delete this project"} %></p>
+<div id="show-task-title">
+	<h1 class="title"><%= @task.name %></h1>
+	<p class="description"><%= @task.description %><p>
+	<div id="button-align">
+		<p class="button", style="text-decoration-color: white"><%= link_to "Delete Project", task_path(@task), method: :delete, data: { confirm: "Are you sure you want to delete this project"} %></p>
+		<p class="new-item-button"><%= link_to "Create New Item", new_task_item_path(@task) %></p>
+	</div>
 </div>
 
 <div>
-	<%= link_to "Create New Item", new_task_item_path(@task) %>
+	
 	<%= render @task.items %>
 </div>
 
